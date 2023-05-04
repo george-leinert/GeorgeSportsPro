@@ -1,0 +1,63 @@
+﻿@using SportsProGeorge.Models;
+@model IncidentViewModel
+@{
+	string title = ViewBag.Action + " Incident";
+	ViewData["Title"] = title;
+	Layout = "_Layout";
+}
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="Edit" method="post">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<div class="mb-3">
+		<label asp-for="@Model.Incident.Title" class="form-label">Title</label>
+		<input asp-for="@Model.Incident.Title" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Incident.Description" class="form-label">Description</label>
+		<input asp-for="@Model.Incident.Description" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Incident.CustomerID" class="form-label">Customer</label>
+		<select asp-for="@Model.Incident.CustomerID" class="form-control">
+			<option value="">Select A Customer</option>
+			@foreach (Customer c in ViewBag.Customers)
+			{
+				<option value="@c.CustomerID">@c.Name</option>
+			}
+		</select>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="@Model.Incident.TechnicianID" class="form-label">Technician</label>
+		<select asp-for="@Model.Incident.TechnicianID" class="form-control">
+			@foreach (Technician t in ViewBag.Technicians)
+			{
+				<option value="@t.TechnicianID">@t.Name</option>
+			}
+		</select>
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Incident.DateOpened" class="form-label">Date Opened</label>
+		<input asp-for="@Model.Incident.DateOpened" class="form-control" type="date" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Incident.ProductID" class="form-label">Product</label>
+		<select asp-for="@Model.Incident.ProductID" asp-items="@(new SelectList(Model.Products, "ProductID", "Name"))" class="form-control">
+			<option value="">Select a product</option>
+		</select>
+		<span asp-validation-for="@Model.Incident.ProductID" class="text-danger"></span>
+	</div>
+
+
+	<input type="hidden" asp-for=@Model.Incidents />
+
+
+	@*	<input type="hidden" asp-for="@Model.Incident.IncidentID" />
+	*@
+	<button type="submit" class="btn btn-primary">Save</button>
+
+	<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+
+</form>

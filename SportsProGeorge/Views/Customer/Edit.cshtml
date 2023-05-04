@@ -1,0 +1,61 @@
+﻿@using SportsProGeorge.Models;
+@model Customer
+@{
+	string title = ViewBag.Action + " Customer";
+	ViewData["Title"] = title;
+	Layout = "_Layout";
+}
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="Edit" method="post">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<div class="mb-3">
+		<label asp-for="Name" class="form-label">Name</label>
+		<input asp-for="Name" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="Email" class="form-label">Email</label>
+		<input asp-for="Email" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="City" class="form-label">City</label>
+		<input asp-for="City" class="form-control" />
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="Address" class="form-label">Address</label>
+		<input asp-for="Address" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="State" class="form-label">State</label>
+		<input asp-for="State" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="ZipCode" class="form-label">Zip Code</label>
+		<input asp-for="ZipCode" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+		<input asp-for="PhoneNumber" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="CountryId" class="form-label">Country</label>
+		<select asp-for="CountryId" class="form-select">
+			<option value="">Select A Country</option>
+			@foreach (Country c in ViewBag.Countries)
+			{
+				<option value="@c.CountryId">@c.Name</option>
+			}
+		</select>
+	</div>
+
+
+
+	<input type="hidden" asp-for="CustomerID" />
+
+	<button type="submit" class="btn btn-primary">Save</button>
+
+	<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+
+</form>

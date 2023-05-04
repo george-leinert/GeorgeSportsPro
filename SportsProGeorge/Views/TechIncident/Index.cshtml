@@ -1,0 +1,21 @@
+﻿@using SportsProGeorge.Models;
+@model Technician
+@{
+    ViewData["Title"] = "Get Technician";
+    Layout = "_Layout";
+}
+<h2>Technician</h2>
+
+<form asp-action="List" method="post">
+    <label asp-for="TechnicianID" class="form-label">Technician</label>
+    <select asp-for="TechnicianID" class="form-control">
+        <option value="0">Select A Technician</option>
+        @foreach (Technician t in ViewBag.Technicians)
+        {
+            <option value="@t.TechnicianID">@t.Name</option>
+        }
+    </select>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

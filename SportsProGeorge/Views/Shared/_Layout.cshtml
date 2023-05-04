@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using SportsProGeorge.Models;
+@inject SignInManager<User> signInManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - SportsPro</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/SportsPro.styles.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+			<div class="container-fluid">
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportsPro</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link @if (ViewBag.Title == "Home Page") {
+							<text>active</text>
+							}" asp-controller="Home" asp-action="Index">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @if (ViewBag.Title.Contains("Product")) {
+							<text>active</text>
+							}" asp-controller="Product" asp-action="Index">Products</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @if (ViewBag.Title.Contains("Technicians")) {
+							<text>active</text>
+							}" asp-controller="Technician" asp-action="Index">Technicians</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @if (ViewBag.Title.Contains("Customer")) {
+							<text>active</text>
+							}" asp-controller="Customer" asp-action="Index">Customers</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @if (ViewBag.Title.Contains("Incident")) {
+							<text>active</text>
+							}" asp-controller="Incident" asp-action="Index">Incidents</a>
+						</li>
+						@if (signInManager.IsSignedIn(User))
+						{
+							<li class="nav-item active">
+								<span class="nav-link">@User.Identity.Name</span>
+							</li>
+							<li class="nav-item active">
+								<form method="post" asp-action="LogOut" asp-controller="Account"
+								  asp-area="">
+									<input type="submit" value="Log Out"
+										   class="btn nav-link" />
+@*									<span class="text-light">Log Out</span>
+*@								</form>
+							</li>
+
+						}
+						else
+						{
+
+							var action = ViewContext.RouteData.Values["action"]?.ToString();
+
+							<li class="nav-item active">
+								<a asp-action="Register" asp-controller="Account" class="nav-link">Register</a>
+							</li>
+							<li class="nav-item active">
+								<a asp-action="Login" asp-controller="Account" class="nav-link">Login</a>
+							</li>
+
+						}
+						<li class="nav-item">
+							<a class="nav-link @if (ViewBag.Title == "About") {
+							<text>active</text>
+							}" asp-controller="Home" asp-action="About">About</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@if (TempData.Keys.Contains("message"))
+			{
+				<h2 class="bg-info text-white text-center p-2 mt-2 rounded">@TempData["message"]</h2>
+			}
+		</main>
+		@RenderBody()
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; 2023 - SportsPro
+		</div>
+	</footer>
+	@RenderSection("scripts", false);
+</body>
+</html>

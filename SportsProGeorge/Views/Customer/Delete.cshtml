@@ -1,0 +1,14 @@
+﻿@using SportsProGeorge.Models;
+@model Customer
+@{
+	ViewData["Title"] = "Delete A Customer";
+	Layout = "_Layout";
+
+}
+<h2>Confirm Deletion</h2>
+<h3>Are you sure want to delete @Model.Name</h3>
+<form asp-action="Delete" method="post">
+	<input type="hidden" asp-for="CustomerID" />
+	<button type="submit" class="btn btn-primary">Yes</button>
+	<a asp-action="Index" asp-controller="Home" class="btn btn-secondary">No</a>
+</form>
